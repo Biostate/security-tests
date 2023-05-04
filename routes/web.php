@@ -19,13 +19,20 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $todos = \App\Models\Todo::query()->authUser()->incomplete()->latest()->get();
+
+    return view('dashboard', compact('todos'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::post('/todos', [\App\Http\Controllers\TodoController::class, 'store'])->name('todos.store');
+    Route::post('/todos/{todo}', [\App\Http\Controllers\TodoController::class, 'update'])->name('todos.update');
+    Route::delete('/todos/{todo}', [\App\Http\Controllers\TodoController::class, 'destroy'])->name('todos.destroy');
 });
+
 
 require __DIR__.'/auth.php';
