@@ -14,6 +14,11 @@ class TodoController extends Controller
     {
         $this->authorize('create', Todo::class);
 
+        $this->validate($request, [
+            'title' => 'required|max:255',
+            'description' => 'nullable|max:255',
+        ]);
+
         auth()->user()->todos()->create($request->only('title', 'description'));
 
         return redirect()->route('dashboard');
@@ -25,6 +30,12 @@ class TodoController extends Controller
     public function update(Request $request, Todo $todo)
     {
         $this->authorize('update', $todo);
+
+        $this->validate($request, [
+            'title' => 'required|max:255',
+            'description' => 'nullable|max:255',
+            'is_completed' => 'sometimes|boolean',
+        ]);
 
         $todo->update($request->only('title', 'description', 'is_completed'));
 
