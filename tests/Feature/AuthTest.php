@@ -23,5 +23,11 @@ test('user can\'t be login if is inactive', function () {
         'password' => 'password',
     ]);
 
+    $response->assertSessionHasErrors('email');
+});
+
+test('user can\'t see dashboard if is not logged in', function () {
+    $response = $this->get(route('dashboard'));
+
     $response->assertRedirect(route('login'));
 });
