@@ -1,6 +1,6 @@
 <?php
 
-test('user can create todo', function () {
+test('user should be able to create todo', function () {
     $user = \App\Models\User::factory()->create();
 
     $response = $this->actingAs($user)->post(route('todos.store'), [
@@ -13,7 +13,7 @@ test('user can create todo', function () {
     $this->assertDatabaseCount('todos', 1);
 });
 
-test('user can\'t create todo for another user', function () {
+test('user should not be able to  create todo for another user', function () {
     $user = \App\Models\User::factory()->create();
     $user2 = \App\Models\User::factory()->create();
 
@@ -32,7 +32,7 @@ test('user can\'t create todo for another user', function () {
     ]);
 });
 
-test('user can delete todo', function () {
+test('user should be able to delete todo', function () {
     $user = \App\Models\User::factory()->create();
     $todo = \App\Models\Todo::factory()->create([
         'user_id' => $user->id,
@@ -45,7 +45,7 @@ test('user can delete todo', function () {
     $this->assertDatabaseCount('todos', 0);
 });
 
-test('user can\'t delete another user\'s todo', function () {
+test('user should not be able to  delete another user\'s todo', function () {
     $user = \App\Models\User::factory()->create();
     $user2 = \App\Models\User::factory()->create();
     $todo = \App\Models\Todo::factory()->create([
@@ -59,7 +59,7 @@ test('user can\'t delete another user\'s todo', function () {
 
 
 
-test('user can update todo', function () {
+test('user should be able to update todo', function () {
     $user = \App\Models\User::factory()->create();
     $todo = \App\Models\Todo::factory()->create([
         'user_id' => $user->id,
@@ -78,7 +78,7 @@ test('user can update todo', function () {
     ]);
 });
 
-test('user can\'t update another user\'s todo', function () {
+test('user should not be able to  update another user\'s todo', function () {
     $user = \App\Models\User::factory()->create();
     $user2 = \App\Models\User::factory()->create();
     $todo = \App\Models\Todo::factory()->create([

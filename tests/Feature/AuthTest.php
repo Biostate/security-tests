@@ -1,6 +1,6 @@
 <?php
 
-test('user can be login if is active', function () {
+test('user should be able to login if is active', function () {
     $user = \App\Models\User::factory()->create([
         'is_active' => 1,
     ]);
@@ -13,7 +13,7 @@ test('user can be login if is active', function () {
     $response->assertRedirect(route('dashboard'));
 });
 
-test('user can\'t be login if is inactive', function () {
+test('user should not be able to login if is inactive', function () {
     $user = \App\Models\User::factory()->create([
         'is_active' => 0,
     ]);
@@ -26,7 +26,7 @@ test('user can\'t be login if is inactive', function () {
     $response->assertSessionHasErrors('email');
 });
 
-test('user can\'t see dashboard if is not logged in', function () {
+test('user should not be able to see dashboard if is not logged in', function () {
     $response = $this->get(route('dashboard'));
 
     $response->assertRedirect(route('login'));
